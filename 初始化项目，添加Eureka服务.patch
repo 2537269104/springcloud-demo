@@ -1,0 +1,187 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(date 1587175755646)
++++ pom.xml	(date 1587175755646)
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++    <packaging>pom</packaging>
++    <modules>
++        <module>server</module>
++        <module>eureka-client</module>
++    </modules>
++    <groupId>com.liuhao</groupId>
++    <artifactId>demo</artifactId>
++    <version>1.0-SNAPSHOT</version>
++    <parent>
++        <groupId>org.springframework.boot</groupId>
++        <artifactId>spring-boot-starter-parent</artifactId>
++        <version>2.2.5.RELEASE</version>
++        <relativePath/> <!-- lookup parent from repository -->
++    </parent>
++    <properties>
++        <java.version>1.8</java.version>
++        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
++    </properties>
++</project>
+\ No newline at end of file
+Index: eureka-client/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- eureka-client/pom.xml	(date 1587178307142)
++++ eureka-client/pom.xml	(date 1587178307142)
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <artifactId>demo</artifactId>
++        <groupId>com.liuhao</groupId>
++        <version>1.0-SNAPSHOT</version>
++    </parent>
++    <modelVersion>4.0.0</modelVersion>
++
++    <artifactId>eureka-client</artifactId>
++
++    <dependencies>
++
++        <dependency>
++            <groupId>org.springframework.cloud</groupId>
++            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
++            <version>2.2.2.RELEASE</version>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
++    </dependencies>
++
++</project>
+\ No newline at end of file
+Index: eureka-client/src/main/java/com/liuhao/client/EurekaClientApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- eureka-client/src/main/java/com/liuhao/client/EurekaClientApplication.java	(date 1587176952828)
++++ eureka-client/src/main/java/com/liuhao/client/EurekaClientApplication.java	(date 1587176952828)
+@@ -0,0 +1,16 @@
++package com.liuhao.client;
++
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
++
++@EnableEurekaClient
++@SpringBootApplication
++public class EurekaClientApplication {
++
++    public static void main(String[] args) {
++
++        SpringApplication.run(EurekaClientApplication.class,args);
++    }
++
++}
+Index: server/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- server/src/main/resources/application.properties	(date 1587178509860)
++++ server/src/main/resources/application.properties	(date 1587178509860)
+@@ -0,0 +1,13 @@
++#服务名称
++spring.application.name=eureka-server
++#端口号
++server.port=8761
++eureka.instance.hostname=localhost
++#服务注册中心的配置内容，指定服务注册中心的位置
++eureka.client.service- url.defaultZone=http://${eureka.instance.hostname}/${server.port}/eureka/
++#是否检索服务
++eureka.client.fetch-registry=false
++ #是否向服务注册中心注册自己
++eureka.client.register-with-eureka=false
++#关闭eureka的自我保护模式
++eureka.server.enable-replicated-request-compression=false
+\ No newline at end of file
+Index: server/src/main/java/com/liuhao/demo/EurekaServerApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- server/src/main/java/com/liuhao/demo/EurekaServerApplication.java	(date 1587176974586)
++++ server/src/main/java/com/liuhao/demo/EurekaServerApplication.java	(date 1587176974586)
+@@ -0,0 +1,16 @@
++package com.liuhao.demo;
++
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
++
++@EnableEurekaServer
++@SpringBootApplication
++public class EurekaServerApplication {
++
++    public static void main(String[] args) {
++
++        SpringApplication.run(EurekaServerApplication.class, args);
++    }
++
++}
+Index: eureka-client/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- eureka-client/src/main/resources/application.properties	(date 1587178371953)
++++ eureka-client/src/main/resources/application.properties	(date 1587178371953)
+@@ -0,0 +1,8 @@
++
++#服务名称
++spring.application.name=eureka-client
++server.port=8180
++#服务注册中心的地址
++eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
++
++
+Index: server/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- server/pom.xml	(date 1587123152342)
++++ server/pom.xml	(date 1587123152342)
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <artifactId>demo</artifactId>
++        <groupId>com.liuhao</groupId>
++        <version>1.0-SNAPSHOT</version>
++    </parent>
++    <modelVersion>4.0.0</modelVersion>
++
++    <artifactId>server</artifactId>
++    <dependencies>
++
++
++        <dependency>
++            <groupId>org.springframework.cloud</groupId>
++            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
++            <version>2.2.2.RELEASE</version>
++        </dependency>
++    </dependencies>
++
++</project>
+\ No newline at end of file
