@@ -27,7 +27,7 @@ public class RibbonConfig {
     @Bean
     public IRule iRule(){
         //随机算法
-        return  new RandomRule();
-        //return new RoundRobinRule();
+        //return  new RandomRule();
+        return new RoundRobinRule();
     }
 }

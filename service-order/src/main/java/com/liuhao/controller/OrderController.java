@@ -4,6 +4,7 @@ import com.liuhao.entity.Order;
 import com.liuhao.entity.User;
 import com.liuhao.feign.UserFeignClient;
 import com.liuhao.service.IOrderService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class OrderController {
     private UserFeignClient userFeignClient;
 
     @RequestMapping("getOrderById")
+    @HystrixCommand(fallbackMethod = "getUserByUserFallbackMethod")
     public Order getOrderById(@RequestParam("id") Integer id){
         //方式一 使用ribbon+restTemplate 实现负载均衡 以及 服务间调用
         //根据oid查询order对象
@@ -35,9 +37,9 @@ public class OrderController {
          //方式二  使用feign的方式
         //User user = userFeignClient.getUserById(order.getUserId());
         //实现 服务间调用对象传参
-        User user = new User();
-        user.setId(15);
-        User user1 = userFeignClient.getUserByUser(user);
+       // User user = new User();
+        //user.setId(15);
+        User user1 = userFeignClient.getUserById(order.getUserId());
         log.info("user:{}",user1);
         order.setId(id);
         order.setUserId(user1.getId());
@@ -50,5 +52,14 @@ public class OrderController {
     public String getOrderNoById(@RequestParam("id") Integer id){
 
         return iOrderService.getOrdernameById(id);
+    }
+
+   //getUserByIdFallbackMethod方法参数要和userFeginClient.getUserByIdr参数一致。
+    public Order getUserByUserFallbackMethod(Integer id){
+
+        Order order = iOrderService.getOrderById(id);
+        order.setUsername("getUserByUserFallbackMethod");
+
+        return order;
     }
 }
