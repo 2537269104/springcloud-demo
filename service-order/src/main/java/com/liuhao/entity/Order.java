@@ -1,5 +1,6 @@
 package com.liuhao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ public class Order implements Serializable {
 
     private Integer id;
 
-    private String orderNo;
+    private String name;
 
     private Integer userId;
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
 
-
     @Autowired
     private IUserService iUserService;
 
@@ -31,10 +30,4 @@ public class UserController {
         return iUserService.getUserByUser(user);
     }
 
-
-    @RequestMapping("getUsernameById")
-    public String getUsernameById(@RequestParam("id") Integer id){
-
-        return iUserService.getUsernameById(id);
-    }
 }

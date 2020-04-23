@@ -12,6 +12,7 @@
         <module>service-user-interface</module>
         <module>service-order</module>
         <module>service-user</module>
+        <module>zuul-gateway</module>
     </modules>
     <groupId>com.liuhao</groupId>
     <artifactId>demo</artifactId>

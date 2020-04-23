@@ -39,11 +39,10 @@ public class OrderController {
         //实现 服务间调用对象传参
        // User user = new User();
         //user.setId(15);
-        User user1 = userFeignClient.getUserById(order.getUserId());
-        log.info("user:{}",user1);
+        User u = userFeignClient.getUserById(order.getUserId());
+        log.info("user:{}",u);
         order.setId(id);
-        order.setUserId(user1.getId());
-        order.setUsername(user1.getUsername());
+        order.setUserId(u.getId());
         return order;
     }
 

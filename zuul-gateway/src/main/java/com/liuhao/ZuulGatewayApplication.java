@@ -1,18 +1,18 @@
 package com.liuhao;
 
-import org.mybatis.spring.annotation.MapperScan;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
+@EnableZuulProxy
 @EnableEurekaClient
 @SpringBootApplication
-@MapperScan("com.liuhao.mapper")
-public class ServiceUserApplication {
+public class ZuulGatewayApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(ServiceUserApplication.class,args);
+        SpringApplication.run(ZuulGatewayApplication.class);
     }
-
 }

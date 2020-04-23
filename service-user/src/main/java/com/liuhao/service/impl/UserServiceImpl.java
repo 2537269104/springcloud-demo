@@ -1,19 +1,22 @@
 package com.liuhao.service.impl;
 
 import com.liuhao.entity.User;
+import com.liuhao.mapper.UserMapper;
 import com.liuhao.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
+    @Resource
+    private UserMapper userMapper;
+
     public User getUserById(Integer id){
 
-        User user = new User();
-
-        user.setId(id);
-        user.setUsername("username"+id);
-        return user;
+        return userMapper.getUserById(id);
     }
 
 
